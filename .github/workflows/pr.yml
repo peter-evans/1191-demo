@@ -1,0 +1,31 @@
+name: PR
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  pr:
+    name: PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Increment A
+        run: |
+          new=$(( $(cat a) + 1 ))
+          echo $new > a
+
+          echo "A=$new" >> $GITHUB_ENV
+
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v4.2.0
+        with:
+          branch: update
+          commit-message: Bump A to ${{ env.A }}
+          title: Bump A to ${{ env.A }}
+          committer: "Robot <robot@example.com>"
+          author: "Robot <robot@example.com>"

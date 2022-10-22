@@ -1,0 +1,23 @@
+name: Rewrite last commit
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  commit-a:
+    name: Rewrite last commit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Rewrite last commit
+        run: |
+          git config --global user.email "robot@example.com"
+          git config --global user.name "Robot"
+          EDITOR=cat git commit --amend
+          git push -f
