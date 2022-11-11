@@ -22,7 +22,7 @@ jobs:
           echo "A=$new" >> $GITHUB_ENV
 
       - name: Open pull request
-        uses: peter-evans/create-pull-request@v4.2.0
+        uses: peter-evans/create-pull-request@base-force-push
         with:
           branch: update
           commit-message: Bump A to ${{ env.A }}
